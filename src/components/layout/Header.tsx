@@ -15,50 +15,28 @@ export function Header() {
 
   return (
     <header
+      className="fixed top-0 left-0 right-0 z-50 px-8 py-6 flex items-center justify-between"
       style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        padding: "1.5rem 2rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
         background: "linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%)",
-        backdropFilter: "blur(0px)",
       }}
     >
       <Link
         href="/"
-        style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "1.1rem",
-          letterSpacing: "0.01em",
-          color: "var(--text-primary)",
-          textDecoration: "none",
-        }}
+        className="font-display text-[1.1rem] tracking-[0.01em] text-foreground no-underline"
       >
         Thomas Woroniak
-        <span style={{ color: "var(--accent)", marginLeft: "0.15em" }}>Photography</span>
+        <span className="text-accent ml-[0.15em]">Photography</span>
       </Link>
 
-      <nav style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+      <nav className="flex gap-8 items-center">
         {NAV_LINKS.map(({ href, label }) => (
           <Link
             key={href}
             href={href}
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "0.8rem",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              textDecoration: "none",
-              color: pathname.startsWith(href)
-                ? "var(--accent)"
-                : "var(--text-secondary)",
-              transition: "color 0.2s ease",
-            }}
+            className={clsx(
+              "font-body text-[0.8rem] tracking-[0.12em] uppercase no-underline transition-colors duration-200",
+              pathname.startsWith(href) ? "text-accent" : "text-secondary"
+            )}
           >
             {label}
           </Link>

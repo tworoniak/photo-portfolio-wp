@@ -1,28 +1,29 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --bg: #0a0a0a;
-    --surface: #111111;
-    --surface-2: #1a1a1a;
-    --border: #2a2a2a;
-    --text-primary: #f0ece4;
-    --text-secondary: #888880;
-    --text-muted: #444440;
-    --accent: #c8a96e;
-    --accent-dim: #8a7248;
-    --font-display: "DM Serif Display", serif;
-    --font-body: "DM Sans", sans-serif;
-    --font-mono: "JetBrains Mono", monospace;
-  }
+@theme {
+  --color-canvas: #0a0a0a;
+  --color-surface: #111111;
+  --color-surface-2: #1a1a1a;
+  --color-border: #2a2a2a;
+  --color-foreground: #f0ece4;
+  --color-secondary: #888880;
+  --color-muted: #444440;
+  --color-accent: #c8a96e;
+  --color-accent-dim: #8a7248;
 
+  --font-display: var(--font-display-loaded, "DM Serif Display", serif);
+  --font-body: var(--font-body-loaded, "DM Sans", sans-serif);
+  --font-mono: var(--font-mono-loaded, "JetBrains Mono", monospace);
+}
+
+@layer base {
   * {
     box-sizing: border-box;
   }
 
   html {
-    background-color: var(--bg);
-    color: var(--text-primary);
+    background-color: var(--color-canvas);
+    color: var(--color-foreground);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -34,39 +35,12 @@
   }
 
   ::selection {
-    background-color: var(--accent);
-    color: var(--bg);
+    background-color: var(--color-accent);
+    color: var(--color-canvas);
   }
 
   img {
     display: block;
-  }
-}
-
-@layer utilities {
-  .font-display {
-    font-family: var(--font-display);
-  }
-  .font-mono {
-    font-family: var(--font-mono);
-  }
-  .text-accent {
-    color: var(--accent);
-  }
-  .bg-surface {
-    background-color: var(--surface);
-  }
-  .bg-surface-2 {
-    background-color: var(--surface-2);
-  }
-  .border-subtle {
-    border-color: var(--border);
-  }
-  .text-secondary {
-    color: var(--text-secondary);
-  }
-  .text-muted {
-    color: var(--text-muted);
   }
 }
 
@@ -81,6 +55,11 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 128px 128px;
+}
+
+/* Series card hover — single source of truth */
+.series-card:hover .series-card-img {
+  transform: scale(1.04);
 }
 
 /* Animations */

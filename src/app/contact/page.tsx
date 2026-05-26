@@ -6,129 +6,61 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div
-      style={{
-        paddingTop: "10rem",
-        paddingBottom: "6rem",
-        padding: "10rem 2rem 6rem",
-        maxWidth: "600px",
-        margin: "0 auto",
-      }}
-    >
-      <p
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.7rem",
-          letterSpacing: "0.2em",
-          textTransform: "uppercase",
-          color: "var(--accent)",
-          margin: "0 0 1rem",
-        }}
-      >
+    <div className="px-8 pt-40 pb-24 max-w-150 mx-auto">
+      <p className="font-mono text-[0.7rem] tracking-[0.2em] uppercase text-accent mb-4">
         Contact
       </p>
-      <h1
-        style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "clamp(2.5rem, 5vw, 4rem)",
-          lineHeight: 1,
-          margin: "0 0 2.5rem",
-        }}
-      >
+      <h1 className="font-display text-[clamp(2.5rem,5vw,4rem)] leading-none mb-10">
         Let&apos;s Work Together
       </h1>
 
-      <p
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: "1rem",
-          color: "var(--text-secondary)",
-          lineHeight: 1.7,
-          marginBottom: "3rem",
-        }}
-      >
+      <p className="font-body text-base text-secondary leading-[1.7] mb-12">
         Available for concert coverage, accreditation shoots, and editorial
         projects. Response within 24–48 hours.
       </p>
 
       {/* Contact form — wire to WP Contact Form 7 REST API or Formspree */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-        {["Name", "Email", "Subject"].map((field) => (
-          <div key={field}>
-            <label
-              style={{
-                display: "block",
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.65rem",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--text-muted)",
-                marginBottom: "0.5rem",
-              }}
-            >
-              {field}
-            </label>
-            <input
-              type={field === "Email" ? "email" : "text"}
-              style={{
-                width: "100%",
-                background: "var(--surface)",
-                border: "1px solid var(--border)",
-                padding: "0.75rem 1rem",
-                color: "var(--text-primary)",
-                fontFamily: "var(--font-body)",
-                fontSize: "0.9rem",
-                outline: "none",
-              }}
-              placeholder={`Your ${field.toLowerCase()}`}
-            />
-          </div>
-        ))}
+      <div className="flex flex-col gap-5">
+        {["Name", "Email", "Subject"].map((field) => {
+          const fieldId = field.toLowerCase();
+          return (
+            <div key={field}>
+              <label
+                htmlFor={fieldId}
+                className="block font-mono text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-2"
+              >
+                {field}
+              </label>
+              <input
+                id={fieldId}
+                name={fieldId}
+                type={field === "Email" ? "email" : "text"}
+                className="w-full bg-surface border border-border py-3 px-4 text-foreground font-body text-[0.9rem] outline-none"
+                placeholder={`Your ${field.toLowerCase()}`}
+              />
+            </div>
+          );
+        })}
 
         <div>
           <label
-            style={{
-              display: "block",
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.65rem",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "var(--text-muted)",
-              marginBottom: "0.5rem",
-            }}
+            htmlFor="message"
+            className="block font-mono text-[0.65rem] tracking-[0.12em] uppercase text-muted mb-2"
           >
             Message
           </label>
           <textarea
+            id="message"
+            name="message"
             rows={6}
-            style={{
-              width: "100%",
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              padding: "0.75rem 1rem",
-              color: "var(--text-primary)",
-              fontFamily: "var(--font-body)",
-              fontSize: "0.9rem",
-              outline: "none",
-              resize: "vertical",
-            }}
+            className="w-full bg-surface border border-border py-3 px-4 text-foreground font-body text-[0.9rem] outline-none resize-y"
             placeholder="Tell me about the project..."
           />
         </div>
 
         <button
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.75rem",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            color: "var(--bg)",
-            background: "var(--accent)",
-            border: "none",
-            padding: "0.85rem 2rem",
-            cursor: "pointer",
-            alignSelf: "flex-start",
-          }}
+          type="button"
+          className="font-mono text-xs tracking-[0.15em] uppercase text-base bg-accent border-0 py-[0.85rem] px-8 cursor-pointer self-start"
         >
           Send Message
         </button>

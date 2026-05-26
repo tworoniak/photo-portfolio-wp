@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { MOCK_SERIES } from "@/lib/mock-data";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -13,7 +13,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const series = MOCK_SERIES.find((s) => s.slug === params.slug);
+  const { slug } = await params;
+  const series = MOCK_SERIES.find((s) => s.slug === slug);
   if (!series) return { title: "Not Found" };
   return {
     title: series.title,
@@ -21,96 +22,55 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function SeriesPage({ params }: Props) {
-  const series = MOCK_SERIES.find((s) => s.slug === params.slug);
+export default async function SeriesPage({ params }: Props) {
+  const { slug } = await params;
+  const series = MOCK_SERIES.find((s) => s.slug === slug);
   if (!series) notFound();
 
   const { photoSeriesFields: fields } = series;
   const img = series.featuredImage?.node;
 
   return (
-    <div style={{ paddingTop: "5rem" }}>
+    <div className="pt-20">
       {/* Hero */}
       {img && (
-        <div style={{ position: "relative", height: "70svh", overflow: "hidden" }}>
+        <div className="relative h-[70svh] overflow-hidden">
           <Image
             src={img.sourceUrl}
             alt={img.altText || series.title}
             fill
             priority
-            style={{ objectFit: "cover" }}
+            className="object-cover"
           />
           <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.1) 40%, rgba(10,10,10,0.8) 100%)",
-            }}
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(to bottom, rgba(10,10,10,0.4) 0%, rgba(10,10,10,0.1) 40%, rgba(10,10,10,0.8) 100%)" }}
           />
         </div>
       )}
 
       {/* Meta block */}
-      <div
-        style={{
-          padding: "3rem 2rem",
-          borderBottom: "1px solid var(--border)",
-          display: "grid",
-          gridTemplateColumns: "1fr auto",
-          gap: "2rem",
-          alignItems: "start",
-        }}
-      >
+      <div className="px-8 py-12 border-b border-border grid grid-cols-[1fr_auto] gap-8 items-start">
         <div>
           <Link
             href="/gallery"
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.68rem",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: "var(--accent)",
-              textDecoration: "none",
-              display: "inline-block",
-              marginBottom: "1rem",
-            }}
+            className="font-mono text-[0.68rem] tracking-[0.12em] uppercase text-accent no-underline inline-block mb-4"
           >
             ← Back to Gallery
           </Link>
           <h1
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(2rem, 5vw, 3.5rem)",
-              margin: "0 0 1rem",
-              lineHeight: 1.05,
-            }}
+            className="font-display mb-4 leading-[1.05]"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
             {series.title}
           </h1>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "1rem",
-              color: "var(--text-secondary)",
-              lineHeight: 1.7,
-              maxWidth: "600px",
-              margin: 0,
-            }}
-          >
+          <p className="font-body text-base text-secondary leading-[1.7] max-w-150 m-0">
             {fields.description}
           </p>
         </div>
 
         {/* Stats */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1.25rem",
-            minWidth: "200px",
-          }}
-        >
+        <div className="flex flex-col gap-5 min-w-50">
           {[
             { label: "Genre", value: fields.genre },
             { label: "Location", value: fields.location },
@@ -119,26 +79,10 @@ export default function SeriesPage({ params }: Props) {
             ...(fields.gear ? [{ label: "Gear", value: fields.gear }] : []),
           ].map(({ label, value }) => (
             <div key={label}>
-              <p
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.62rem",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: "var(--text-muted)",
-                  margin: "0 0 0.2rem",
-                }}
-              >
+              <p className="font-mono text-[0.62rem] tracking-[0.14em] uppercase text-muted mb-[0.2rem]">
                 {label}
               </p>
-              <p
-                style={{
-                  fontFamily: "var(--font-body)",
-                  fontSize: "0.875rem",
-                  color: "var(--text-primary)",
-                  margin: 0,
-                }}
-              >
+              <p className="font-body text-sm text-foreground m-0">
                 {value}
               </p>
             </div>
@@ -147,20 +91,10 @@ export default function SeriesPage({ params }: Props) {
       </div>
 
       {/* Photo grid — populated from WP ACF gallery field in production */}
-      <div style={{ padding: "3rem 2rem" }}>
-        <p
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.7rem",
-            color: "var(--text-muted)",
-            letterSpacing: "0.1em",
-            textAlign: "center",
-            padding: "4rem 0",
-            border: "1px dashed var(--border)",
-          }}
-        >
+      <div className="px-8 py-12">
+        <p className="font-mono text-[0.7rem] text-muted tracking-widest text-center py-16 border border-dashed border-border">
           Photo grid renders here — populated via WPGraphQL{" "}
-          <code style={{ color: "var(--accent)" }}>photoSeriesFields.photos</code> ACF field
+          <code className="text-accent">photoSeriesFields.photos</code> ACF field
         </p>
       </div>
     </div>

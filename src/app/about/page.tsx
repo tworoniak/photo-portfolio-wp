@@ -7,50 +7,15 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div
-      style={{
-        paddingTop: "10rem",
-        paddingBottom: "6rem",
-        padding: "10rem 2rem 6rem",
-        maxWidth: "780px",
-        margin: "0 auto",
-      }}
-    >
-      <p
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.7rem",
-          letterSpacing: "0.2em",
-          textTransform: "uppercase",
-          color: "var(--accent)",
-          margin: "0 0 1rem",
-        }}
-      >
+    <div className="px-8 pt-40 pb-24 max-w-195 mx-auto">
+      <p className="font-mono text-[0.7rem] tracking-[0.2em] uppercase text-accent mb-4">
         About
       </p>
-      <h1
-        style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "clamp(2.5rem, 5vw, 4rem)",
-          lineHeight: 1,
-          margin: "0 0 2.5rem",
-          fontStyle: "italic",
-        }}
-      >
+      <h1 className="font-display text-[clamp(2.5rem,5vw,4rem)] leading-none mb-10 italic">
         Thomas Woroniak
       </h1>
 
-      <div
-        style={{
-          fontFamily: "var(--font-body)",
-          fontSize: "1.05rem",
-          lineHeight: 1.8,
-          color: "var(--text-secondary)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "1.5rem",
-        }}
-      >
+      <div className="font-body text-[1.05rem] leading-[1.8] text-secondary flex flex-col gap-6">
         <p>
           Based in Kansas City, MO. Concert and event photographer specializing
           in heavy music — metal, hardcore, extreme genres.
@@ -61,7 +26,7 @@ export default function AboutPage() {
             href="https://antiheromag.com"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--accent)", textDecoration: "none" }}
+            className="text-accent no-underline"
           >
             Antihero Magazine
           </a>
@@ -76,18 +41,7 @@ export default function AboutPage() {
 
       <Link
         href="/contact"
-        style={{
-          display: "inline-block",
-          marginTop: "3rem",
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.75rem",
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
-          color: "var(--bg)",
-          background: "var(--accent)",
-          padding: "0.85rem 2rem",
-          textDecoration: "none",
-        }}
+        className="inline-block mt-12 font-mono text-xs tracking-[0.15em] uppercase text-canvas bg-accent py-[0.85rem] px-8 no-underline"
       >
         Get In Touch
       </Link>
