@@ -55,7 +55,7 @@ export const MOCK_SERIES: PhotoSeries[] = [
     date: "2024-07-20",
     featuredImage: {
       node: {
-        sourceUrl: "https://images.unsplash.com/photo-1501386761578-eaa54b8657f5?w=1200&q=80",
+        sourceUrl: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=1200&q=80",
         altText: "This Gift Is a Curse live",
         mediaDetails: { width: 1200, height: 800 },
       },
